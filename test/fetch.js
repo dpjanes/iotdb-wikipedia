@@ -1,5 +1,5 @@
 /**
- *  test/initialize.js
+ *  test/fetch.js
  *
  *  David Janes
  *  IOTDB
@@ -29,23 +29,29 @@ const assert = require("assert");
 const wikipedia = require("..")
 const _util = require("./_util")
 
-describe("initialize", function() {
-    let self = {}
-
-    before(function(done) {
-        _.promise.make(self)
-            .then(_util.initialize)
-            .then(_util.load)
-            .then(_.promise.make(sd => {
-                self = sd;
-            }))
-            .then(_.promise.done(done))
-            .catch(done)
-    })
-
+describe("fetch", function() {
     describe("good", function() {
-        it("works", function(done) {
-            _.promise.make(self)
+        it("normal URL", function(done) {
+            _.promise.make({
+                url: "https://en.wikipedia.org/wiki/Fender%27s_blue_butterfly",
+            })
+                .then(wikipedia.fetch)
+                .then(_.promise.make(sd => {
+                    assert.ok(sd.document)
+                    assert.ok(sd.document.indexOf("{{Taxonbar|from=Q5443220}}") > -1)
+                }))
+                .then(_.promise.done(done))
+                .catch(done)
+        })
+        it("just a name", function(done) {
+            _.promise.make({
+                url: "Fender's_blue_butterfly",
+            })
+                .then(wikipedia.fetch)
+                .then(_.promise.make(sd => {
+                    assert.ok(sd.document)
+                    assert.ok(sd.document.indexOf("{{Taxonbar|from=Q5443220}}") > -1)
+                }))
                 .then(_.promise.done(done))
                 .catch(done)
         })
