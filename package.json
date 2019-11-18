@@ -4,8 +4,8 @@
         "url": "https://github.com/dpjanes/iotdb-wikipedia/issues"
     }, 
     "dependencies": {
-        "iotdb-fetch": "~1.2.1", 
-        "iotdb-helpers": "~3.3.11"
+        "iotdb-fetch": "~1.2.3", 
+        "iotdb-helpers": "~3.4.2"
     }, 
     "description": "Retrieve Wikipedia Data", 
     "homepage": "https://github.com/dpjanes/node-iotdb", 
